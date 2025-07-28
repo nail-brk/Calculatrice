@@ -1,0 +1,67 @@
+#include <Grapic.h>
+using namespace grapic;
+
+const int DIMW=400;
+
+void affiche_grille() {
+    int i;
+
+    winClear();
+    for(i=0; i<DIMW; i+=10)
+    {
+        line(i,0,i,DIMW); //lignes verticales
+        line(0,i,DIMW,i); //lignes horizontales
+    }
+
+}
+
+void RCrectangle (int taille ) 	{
+
+    winClear();
+    rectangle(DIMW/2 -taille/2, DIMW/2 -taille/2,
+              DIMW/2 + taille/2, DIMW/2+ taille/2 );
+}
+
+
+void nbcarre( int n) {
+    int i;
+    for(i=1; i<n+1; i++) {
+        rectangle(DIMW/2 - i*5, DIMW/2-i*5,DIMW/2 +i*5,DIMW/2+i*5);
+    }
+}
+void CFcircleFill(int rayon,int r, int g, int b) {
+    int x,y;
+    x=DIMW/2;
+    y=DIMW/2;
+    color(r,g,b);
+    circleFill(x,y,rayon);
+
+}
+
+void cible() {
+    int i;
+    int j;
+    int rayon;
+
+    rayon=100;
+    for (j=1; j<=10; j++) {
+        CFcircleFill(rayon,0,0,0);
+        rayon-=10;
+        for(i=1; i<=10; i++) {
+            rayon-=1;
+            CFcircleFill(rayon,255,255,255);
+        }
+    }
+}
+
+int main(int argc, char** argv)
+{
+    winInit("Simple", DIMW, DIMW);
+
+
+    cible();
+    winDisplay();
+    pressSpace();
+    winQuit();
+    return 0;
+}
