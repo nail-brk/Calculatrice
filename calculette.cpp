@@ -1,6 +1,6 @@
-case '^':
-    resultat = pow(num1, num2);
-    break;
-case '%':
-    resultat = static_cast<int>(num1) % static_cast<int>(num2);
-    break;
+char continuer;
+do {
+    // opération
+    cout << "Faire une autre opération ? (o/n) : ";
+    cin >> continuer;
+} while (continuer == 'o');
