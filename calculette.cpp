@@ -1,39 +1,46 @@
 #include <iostream>
-#include <stdlib.h>
-#include <time.h>
 using namespace std;
+
+
+double calculer(double a, double b, char op, bool& erreur) {
+    erreur = false;
+
+    switch (op) {
+        case '+': return a + b;
+        case '-': return a - b;
+        case '*': return a * b;
+        case '/':
+            if (b == 0) {
+                erreur = true;
+                return 0;
+            }
+            return a / b;
+        default:
+            erreur = true;
+            return 0;
+    }
+}
+
+
+void afficherResultat(double resultat, bool erreur, char op) {
+    if (erreur) {
+        if (op == '/' || op == '*') cout << "Erreur : division par zéro !" << endl;
+        else cout << "Erreur : opérateur invalide !" << endl;
+    } else {
+        cout << "Résultat : " << resultat << endl;
+    }
+}
 
 int main() {
     double num1, num2;
-    char operateur;
-    double resultat;
+    char op;
+    bool erreur;
 
-    cout  << "Entrez une opération (ex: 5 + 2) : ";
-    cin >> num1 >> operateur >> num2;
+    cout << "Entrez une opération (ex: 5 + 2) : ";
+    cin >> num1 >> op >> num2;
 
-    switch (operateur) {
-    case '+':
-        resultat = num1 + num2;
-        break;
-    case '-':
-        resultat = num1 - num2;
-        break;
-    case '*':
-        resultat = num1 * num2;
-        break;
-    case '/':
-        if (num2 != 0)
-            resultat = num1 / num2;
-        else {
-            cout << "Erreur : division par zéro !" << endl;
-            return 1;
-        }
-        break;
-    default:
-        cout << "Opérateur invalide !" << endl;
-        return 1;
-    }
+    double resultat = calculer(num1, num2, op, erreur);
+    afficherResultat(resultat, erreur, op);
 
-    cout << "Résultat : " << resultat << endl;
-    return 0;
+    return erreur ? 1 : 0;
 }
