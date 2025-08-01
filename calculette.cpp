@@ -1,53 +1,67 @@
-#include <iostream>
-using namespace std;
-
-void afficherTitre() {
-    cout << "\n=============================" << endl;
-    cout << "         🧮 CALCULATRICE        " << endl;
-    cout << "=============================" << endl;
-}
-
-double calculer(double a, double b, char op, bool& erreur) {
-    erreur = false;
-
-    switch (op) {
-        case '+': return a + b;
-        case '-': return a - b;
-        case '*': return a * b;
-        case '/':
-            if (b == 0) {
-                erreur = true;
-                return 0;
-            }
-            return a / b;
-        default:
-            erreur = true;
-            return 0;
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>🧮 Calculatrice</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-}
-
-void afficherResultat(double resultat, bool erreur, char op) {
-    if (erreur) {
-        if (op == '/') cout << "❌ Erreur : division par zéro !" << endl;
-        else cout << "❌ Erreur : opérateur invalide !" << endl;
-    } else {
-        cout << "✅ Résultat : " << resultat << endl;
+    .container {
+      text-align: center;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
-}
+    input, select, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧮 Calculatrice</h1>
+    <input type="number" id="num1" placeholder="Nombre 1">
+    <select id="operateur">
+      <option value="+">➕</option>
+      <option value="-">➖</option>
+      <option value="*">✖️</option>
+      <option value="/">➗</option>
+    </select>
+    <input type="number" id="num2" placeholder="Nombre 2">
+    <button onclick="calculer()">Calculer</button>
+    <p id="resultat"></p>
+  </div>
 
-int main() {
-    double num1, num2;
-    char op;
-    bool erreur;
+  <script>
+    function calculer() {
+      const a = parseFloat(document.getElementById("num1").value);
+      const b = parseFloat(document.getElementById("num2").value);
+      const op = document.getElementById("operateur").value;
+      let res;
 
-    afficherTitre();
+      if (op === "/" && b === 0) {
+        document.getElementById("resultat").innerText = "❌ Division par zéro !";
+        return;
+      }
 
-    cout << "Exemple d'opération : 5 + 2" << endl;
-    cout << "Entrez une opération : ";
-    cin >> num1 >> op >> num2;
+      switch (op) {
+        case "+": res = a + b; break;
+        case "-": res = a - b; break;
+        case "*": res = a * b; break;
+        case "/": res = a / b; break;
+      }
 
-    double resultat = calculer(num1, num2, op, erreur);
-    afficherResultat(resultat, erreur, op);
-
-    return erreur ? 1 : 0;
-}
+      document.getElementById("resultat").innerText = `✅ Résultat : ${res}`;
+    }
+  </script>
+</body>
+</html>
